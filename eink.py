@@ -8,7 +8,7 @@
 #    - eink_reset
 #
 
-from machine import UART
+from machine import Pin, SPI
 from ustruct import pack_into
 from ustruct import pack
 
@@ -72,7 +72,7 @@ def printhex(s):
 def send(cmd):
 #    if __debug__:
 #        printhex(cmd)
-    uart.write(cmd)
+    hspi.write(cmd)
 
 def addparity(packet):
     parity = 0
@@ -93,8 +93,8 @@ def addparity(packet):
         return None
 
 def eink_init():
-    global uart
-    uart = UART(uartnum, baudrate=115200, pins=(Tx, Rx))
+    global hspi 
+    hspi = SPI(1, baudrate=80000000, polarity=0, phase=0)
 
 def eink_reset():
     pass
